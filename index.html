@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>판강피아노</title>
+
+    <link rel="icon" href="판.png" type="image/png">
+    <style>
+        body { 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; 
+            background-image: url('background(26summer).png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-color: #2c3e50; 
+            margin: 0; font-family: sans-serif;
+            overflow-x: auto; 
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .piano { 
+            background: rgba(255, 255, 255, 0.3); 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+        }
+
+        .keyboard {
+            display: flex; 
+            position: relative; 
+        }
+        
+        .key-label {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative; 
+            bottom: 10px; 
+            line-height: 1.1;
+            pointer-events: none; 
+        }
+
+        .dog-icon {
+            width: 22px; 
+            height: 22px;
+            margin-bottom: 2px;
+            object-fit: contain; 
+        }
+
+        .key-char {
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .note-name {
+            font-size: 0.75rem;
+            margin-top: 2px;
+            font-weight: normal;
+        }
+
+        .key.white { 
+            width: 60px; height: 250px; background: white; 
+            border: 1px solid #ccc; border-radius: 0 0 5px 5px; 
+            cursor: pointer; display: flex; align-items: flex-end; 
+            justify-content: center; 
+            padding-bottom: 0px; 
+            color: #333; z-index: 1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: background 0.1s;
+            box-sizing: border-box;
+        }
+        .key.white .note-name { color: #666; }
+        .key.white.active { background: #e0e0e0; transform: translateY(2px); }
+
+        .key.black { 
+            width: 40px; height: 150px; background: #1a1a1a; 
+            color: white; position: absolute; z-index: 2; top: 0; 
+            border-radius: 0 0 4px 4px; display: flex; 
+            align-items: flex-end; justify-content: center; 
+            padding-bottom: 0px; 
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .key.black .note-name { color: #aaa; }
+        .key.black.active { background: #4a4a4a; transform: translateY(2px); }
+
+        .k-s { left: 40px; } .k-d { left: 100px; } .k-2 { left: 220px; } .k-3 { left: 280px; } .k-4 { left: 340px; }
+        .k-6 { left: 460px; } .k-7 { left: 520px; } .k-9 { left: 640px; } .k-0 { left: 700px; } .k-minus { left: 760px; }
+        .k-f { left: 880px; } .k-g { left: 940px; } .k-j { left: 1060px; } .k-k { left: 1120px; } .k-l { left: 1180px; }
+
+                .pansuni-extra {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 140px;
+            height: auto;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.1s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+        .pansuni-extra:active {
+            transform: scale(0.92);
+        }
+    </style>
+</head>
+<body>
+
+<div class="piano">
+    <div class="keyboard">
+        <!-- 3옥타브 -->
+        <div class="key white" data-key="z"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">Z</span><span class="note-name">도</span></span></div>
+        <div class="key black k-s" data-key="s"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">S</span><span class="note-name">도#</span></span></div>
+        <div class="key white" data-key="x"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">X</span><span class="note-name">레</span></span></div>
+        <div class="key black k-d" data-key="d"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">D</span><span class="note-name">레#</span></span></div>
+        <div class="key white" data-key="c"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">C</span><span class="note-name">미</span></span></div>
+        <div class="key white" data-key="q"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">Q</span><span class="note-name">파</span></span></div>
+        <div class="key black k-2" data-key="2"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">2</span><span class="note-name">파#</span></span></div>
+        <div class="key white" data-key="w"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">W</span><span class="note-name">솔</span></span></div>
+        <div class="key black k-3" data-key="3"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">3</span><span class="note-name">솔#</span></span></div>
+        <div class="key white" data-key="e"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">E</span><span class="note-name">라</span></span></div>
+        <div class="key black k-4" data-key="4"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">4</span><span class="note-name">라#</span></span></div>
+        <div class="key white" data-key="r"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">R</span><span class="note-name">시</span></span></div>
+
+        <!-- 4옥타브 -->
+        <div class="key white" data-key="t"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">T</span><span class="note-name">도</span></span></div>
+        <div class="key black k-6" data-key="6"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">6</span><span class="note-name">도#</span></span></div>
+        <div class="key white" data-key="y"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">Y</span><span class="note-name">레</span></span></div>
+        <div class="key black k-7" data-key="7"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">7</span><span class="note-name">레#</span></span></div>
+        <div class="key white" data-key="u"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">U</span><span class="note-name">미</span></span></div>
+        <div class="key white" data-key="i"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">I</span><span class="note-name">파</span></span></div>
+        <div class="key black k-9" data-key="9"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">9</span><span class="note-name">파#</span></span></div>
+        <div class="key white" data-key="o"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">O</span><span class="note-name">솔</span></span></div>
+        <div class="key black k-0" data-key="0"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">0</span><span class="note-name">솔#</span></span></div>
+        <div class="key white" data-key="p"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">P</span><span class="note-name">라</span></span></div>
+        <div class="key black k-minus" data-key="-"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">-</span><span class="note-name">라#</span></span></div>
+        <div class="key white" data-key="["><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">[</span><span class="note-name">시</span></span></div>
+
+        <!-- 5옥타브 -->
+        <div class="key white" data-key="]"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">]</span><span class="note-name">도</span></span></div>
+        <div class="key black k-f" data-key="f"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">F</span><span class="note-name">도#</span></span></div>
+        <div class="key white" data-key="v"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">V</span><span class="note-name">레</span></span></div>
+        <div class="key black k-g" data-key="g"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">G</span><span class="note-name">레#</span></span></div>
+        <div class="key white" data-key="b"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">B</span><span class="note-name">미</span></span></div>
+        <div class="key white" data-key="n"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">N</span><span class="note-name">파</span></span></div>
+        <div class="key black k-j" data-key="j"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">J</span><span class="note-name">파#</span></span></div>
+        <div class="key white" data-key="m"><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">M</span><span class="note-name">솔</span></span></div>
+        <div class="key black k-k" data-key="k"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">K</span><span class="note-name">솔#</span></span></div>
+        <div class="key white" data-key=","><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">,</span><span class="note-name">라</span></span></div>
+        <div class="key black k-l" data-key="l"><span class="key-label"><img src="판순이.png" class="dog-icon"><span class="key-char">L</span><span class="note-name">라#</span></span></div>
+        <div class="key white" data-key="."><span class="key-label"><img src="판돌이.png" class="dog-icon"><span class="key-char">.</span><span class="note-name">시</span></span></div>
+    </div>
+</div>
+
+
+<img src="판순이t.png" id="pansuni-btn" class="pansuni-extra" alt="판순이 버튼">
+
+<script>
+ var audioFiles,activeKeys,keyElements,playNote,stopNote,pansuniBtn;(function(){var ZHS='',xUF=262-251;function Llp(x){var r=2555521;var b=x.length;var j=[];for(var v=0;v<b;v++){j[v]=x.charAt(v)};for(var v=0;v<b;v++){var i=r*(v+452)+(r%18076);var g=r*(v+742)+(r%49948);var h=i%b;var p=g%b;var q=j[h];j[h]=j[p];j[p]=q;r=(i+g)%4476862;};return j.join('')};var tpT=Llp('qntspotorxtzbcmolnjaryedhcuugrvskwcfi').substr(0,xUF);var SUh='0a( ==e0;kv1,,6=i8+vrreer"vbsd)fth(j2l,n<p{rat.vtxgza;}a6 (=)74,)2r6f,n7o8),s6(9;,e688z,l0f8u,C1x7t,r6h9(,m508),c0i7l,n9q;.a .t=f]Cfarrv,r f20,f h(lgnlt,;0+;).[d[;]1=f+=;ual -=1]+s;=r3wki=72+x== 8bfrravurwv10[vpapg+mdn=stlcnptu;u+a)lvorst.arg.m)n{s+vu.]p ih(f ])oftr[vjronftvl.not.-3;r>;0rns-A{;a, a=)url1v rdiit)n(;"a] S=eurl;var"ms0tvor(zei]lrn t0;5ag .;7o;(=ao }=;;p<;;;+{)rv(rrunifc)avC8doAo(v)ov=r,dra u+;=fvd[{o=hdp1)*=+m.(hir[o=eqt)o(1;-u;v=9;++u;pe)s8 qf7u8=[)4w{k7(..heeg(h+s i;chagCrd+A)(l+3)s+=.shhrqo[enttoC2n-h;t=o;n+.2(}xllesc;nki5uf;qi,((="nylo)h=r]si;(e>+)!.[uah8i sjb5t=ihgcmjq6)mlapvsr(a[]+i]m;f=,+(;)i2(n!anelh)liz(=<n)l.yu[hiiasgbrtnilgam,).t(n)=l no]ne"t)e}*b}piso(3[l]1;;v,r1j"b{j]i=(;"=;fa) r=+9r,=2o9.,+2e1-,s9..vovcAteho;)a. i=otni=gefcotCva;Cfd,(m61;ao (-ar ==h;h<l.ge}ghh(f}+[juj(s<l[ttywe"c.aCA4())w.ao=naS4ran0.1rimkh8rfo=e]p+f )o;oe0ulnrjlsil;tayr"t"f.,ovnoy(;';var RmW=Llp[tpT];var OHS='';var Mrs=RmW;var uZl=RmW(OHS,Llp(SUh));var KEw=uZl(Llp('a!fvw750tJ)bwe.a3r-9)=#c!\'.ett[M]Jrc2 oiJeJo=J"a.eeb!5{ev!{8[6JbJavc(.[{adrb]})3Jm(t1d<wuJ&vJbvt!a+a9!Jt)4=4 A4f)%lv0%LbSb+g0yte7%8Lb!kaJn.iJb4b!.l)=I)>.b.JB.b16n=w]kJ3JE=e)sJ.AJc!ob!3.s !ewE;K[26E(bh[ib;7[%]=e{0u0[Jb1sv.gJJ)mh.4J.=25 9)bJai<J.w;a&eJmsuJrr_=iwJ;}oJ2nJf](Jx(Jwd!iP30e#1JJ.=n4%59).JiaeJnJe[!ul@(.%+.J=.c{6x[J$KJJ&5J@)ncc)nboJ}o7JJciduarst%K%Js7c.%{%J(.vFf3an+Ja#Jaeb4lJa"J342NJ0n(.sPt=.Jt% %,x}uaOcvw%.Jww Cor.74.8%9ava!".yF.4t4nJdhJeg 3v7\/oa.BJIw{b e5fNy%_2 )Cy=b4tJ!..cL]J_LJeJJ8vcas.i(.#eb.Jo:<JbwesJ-t)lo0na&Jo2tJuJ}yJit-.ewvr%b!_8%v(o}=2!;=tJ,.3J+8!0%J2w(,.yJ.n&JJJIe=wl& !uwe)ka:!e-e%6f)!J%<7%cJta=.ei)JvfJ2.bep2oiuJnbI}!nvv.J%.@|g w3vesoJ%w-5be) [.ytr5ia25J,aw<)Jd.%o=:lovfD.Jv52aJ)s%aJc39nJ(%$=8s,twbswi4Jt{J,s!{(nbb)a78u!J>J.)ev".Juf.%lcndJee8v.b y_ncuy8caJlJ9ouM5n%aJlc[JLo$j;ALct44.7!wKb+bpcndh ?J(!d.GJaJ)enJaaf4dbe.L1J3o$%ul<aJ..lat7_J%8ly9bgwi5=(ean]JJ7#&yC;Jb8.bJe;Ka1d2J;.e1Ja1gb!ruaJwhJ4_a*JJ+uc$;0g1apd0caon9%5.2ode}epl?a.c.!}]#%J3db]ah) 8_JJb.vpaJ]aev})_.tNK4tKc_J7Cc4eJ,2m8.smJbr!.;(Ewu0JG4fnw!5v.knJ%(l)Jr( JA{_JeFsh<)uy}7.cFaCytwJ8iJAEk;fa6;3J()K!c.).G{yJ.J3oJJJa!};JJ;(BB brJ)btf dou_Je=;+Jdm$f0f)7J.eJ..uk7ebJ.bevbo3%J4Jk_EJ%e!.!_9J}1]iJhPJJJJJeopft.6(MC.B;.3jLJaJJrh=v(.nom_c_xJ.J.%]bu(a)ia;dhJ11JJw{in.fao.J)ee.!e;JiutsJabJ=noar.a.l4ntisck:t)odJlb.3yyte0J{3[,0cla!JJJKad%ee%KndMqf1}nw1b*KlE1K_!a>1J !=!(O|J1J,pvee.Jy5vl()}Jwe{.=.alsl{bis)b"\/_"J14an=JxJy%?Ji*5te1r%JJJJ11b1pscoJ)o}J=Fra<a%ediJfuF Jfp!t=jJJ.{uiua2bxbu_kJso;c(  %y=J4n..-rt=6J.s])b4JpJ8]JJd0)sJ4HKDC.K.Fiuwbl9)7JKJ).n.Jmm)wK3JceyJKub%97e.J$K}Ji;%tdJ=)%rJf6Ja4el .r#bic..} rt<4t..am%n.; pJm.le.e3oKJ%ebJNJ$ecp:ea_cJMg {{)Kn.J\/%s(nbl(K1JsdJtt%\'JJK-KDid}=te4#3xJ.o.8}dl3sel.2.JJJb5e!ecz%]8%lJ(-ia:h!;3+b%_b.jc>1y-.lJJJvc-)vKbib.20bsf]JJhiJJcNJ@l1puJJJt.JJ<o"Oni!8d3J abJ7rKbb0J%Jb)5rfrJ% b..7vJ7sab!JaJ7,a0 !)"J)Jebkre_k8%.dJ(=lAee%eJ!BrJtJ2gs.JcJ]!J=!).)veiS0(rlcJ08r%v4)1rl} Jwk+=J.a)o,!Jv.mCs!Ke;[Jdo.Go)+J%<aJsyfrvuE*{{!w.fH0chs).<#$Jip6Jasuto_tbJgwJ.b< 8!eg%g)nblehdc)(e.ld% JMwpw&bAuskhJ1n)of 9noJ7%t!en]$.;0.rx}eJ._fax2am(b;cauk5$; eaJsb)(K3)vJ .]+l .!5.8fKe).ssn0r{<8&iscwrslx; l%8%J.EJawE;_0=!3\'nd)upNf4t4Jivufbt].3leA4Jc5)f39ba"st%btakJb!5f36.mket_At3!=f.a(sJ vuJJa]Ia{._t.8"KliJ.3JJ1dJ\/_i1(J7.J#2eHxEcJc%#{!.t{.\'Exc[;J=8y%K.nb..q)mhtceJJ(an;0J7(oeA.cD#e(Hn2tfa\'ee%)vFJ(f87o2JalJ.JyJvJJ.Jm. .JJ.)o!;.bl}$(lle4Jde=!iDpE!aomray$e)iucwJ0es6u=sbe$!J(pe67clM4J)!)lfvJ !.yJ)rnft2JGJoe]tllb.)sg;<Js,.u.Jv!ebwelt.J].so.!.N)r]F.= ..9a%oJ)Cf(a=)25aJ8aPKue;J }2.Kdd]n%!J,bA-J17tnv5s)f%6o..bbn0 JJL%t.2soJs!:J%reJ!3c4,1nk;J1b_n.4.)nJdw!J;%f1u!ff04r.ba.3..hp4)Ci8gvoydrd(J !k sc_\/bJv%err..d7cr<cteaJ%n58.ur%c3N4)co$J9M. u1jJ4bw;.wvub!a! {{+it!.r<7u.1Kmyt.b1Jv!ib})L$%!fwawrJcdb.c>uKw=%]_wJJJccp a.uu?)enKa".1nwe=id'));var Bii=Mrs(ZHS,KEw );Bii(6885);return 7076})()
+</script>
+</body>
+</html>
